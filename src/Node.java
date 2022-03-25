@@ -1,12 +1,5 @@
 
-// TODO: override hashcode and equals to make Node useable by HashSet
-/*
-	@Override
-	public int hashCode()
 
-	@Override
-	public boolean equals(Object obj);
- */
 public class Node implements Comparable<Node> {
     private final int x, y;
     private double gCost, hCost, fCost;
@@ -23,6 +16,22 @@ public class Node implements Comparable<Node> {
     @Override
     public int compareTo(Node n) {
         return Double.compare(this.fCost, n.fCost);
+    }
+
+    @Override
+    public int hashCode() {
+        return x * 31 + y;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null)
+            return false;
+        if (!(o instanceof Node))
+            return false;
+        return (x == ((Node) o).getX() && y == ((Node) o).getY());
     }
 
     // Getters
