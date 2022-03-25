@@ -1,7 +1,5 @@
-import javax.swing.*;
-
 public class Node implements Comparable<Node> {
-    private int x, y;
+    private final int x, y;
     private double gCost, hCost, fCost;
     private Node parent;
 
