@@ -5,8 +5,8 @@ import java.util.PriorityQueue;
 public class AStarPathFinding {
     private final int size;
     private static final double MOVE_COST = 10;                // cost to move { left, right, up , down }
-    private static final double DIAGONAL_MOVE_COST = 10;
-    private boolean complete;// cost to move diagonally
+    private static final double DIAGONAL_MOVE_COST = 10;       // cost to move diagonally
+    private boolean complete;
 
     private Node startNode, endNode;
 
