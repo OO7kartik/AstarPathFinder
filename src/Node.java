@@ -68,6 +68,10 @@ public class Node implements Comparable<Node> {
         this.fCost = fCost;
     }
 
+    public void setParent(Node parent) {
+        this.parent = parent;
+    }
+
     public static boolean isEqual(Node s, Node e) {
         return (s.getX() == e.getX() && s.getY() == e.getY());
     }

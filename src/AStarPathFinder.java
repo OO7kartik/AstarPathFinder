@@ -91,13 +91,28 @@ public class AStarPathFinder {
         findPath(parent);
     }
 
-
-    // TODO: implement add or update this node ( calculate gCost, hCost, fCost )
-    // TODO: add this node to openNodes and update new parent
     public void addOrUpdateNode(int x, int y, Node parent) {
-        // TODO: add check for validate {x, y}
+        Node openNode = new Node(x, y);
+        openNode.setParent(parent);
 
+        // calculate gCost
+        double xGCost = openNode.getX() - parent.getX();
+        double yGCost = openNode.getY() - parent.getY();
+        double gCost = parent.getGCost() + ((xGCost != 0 && yGCost != 0) ? MOVE_COST : DIAGONAL_MOVE_COST);
+        openNode.setGCost(gCost);
 
+        // calculate hCost
+        double hdx = Math.abs(endNode.getX() - openNode.getX());
+        double hdy = Math.abs(endNode.getY() - openNode.getY());
+        double hCost = Math.sqrt(hdx * hdx + hdy + hdy);
+        openNode.setHCost(hCost);
+
+        // calculate fCost
+        double fCost = gCost + hCost;
+        openNode.setFCost(fCost);
+
+        // add openNode to openNodes
+        openNodes.add(openNode);
     }
 
 
