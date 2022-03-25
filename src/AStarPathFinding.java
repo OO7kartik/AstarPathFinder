@@ -12,7 +12,8 @@ public class AStarPathFinding {
 
     private PriorityQueue<Node> openNodes;
     private HashSet<Node> closedNodes;
-    private ArrayList<Node> obstacles, path;// open(explored but not calculated yet), closed(already calculated)
+    private HashSet<Node> obstacles;
+    private ArrayList<Node> path;
 
     public AStarPathFinding(int size) {
         this.size = size;
@@ -21,7 +22,7 @@ public class AStarPathFinding {
 
         openNodes = new PriorityQueue<>();
         closedNodes = new HashSet<>();
-        obstacles = new ArrayList<>();
+        obstacles = new HashSet<>();
         path = new ArrayList<>();
     }
 
@@ -42,10 +43,8 @@ public class AStarPathFinding {
 
     }
 
-
-    // TODO: returns true if current node is an obstacle
     public boolean isObstacle(Node node) {
-
+        return obstacles.contains(node);
     }
 
 
