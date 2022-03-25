@@ -1,3 +1,12 @@
+
+// TODO: override hashcode and equals to make Node useable by HashSet
+/*
+	@Override
+	public int hashCode()
+
+	@Override
+	public boolean equals(Object obj);
+ */
 public class Node implements Comparable<Node> {
     private final int x, y;
     private double gCost, hCost, fCost;
