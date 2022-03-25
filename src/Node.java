@@ -1,43 +1,61 @@
-public class Node {
-    private int x, y, gCost, hCost, fCost;
+
+// TODO: override hashcode and equals to make Node useable by HashSet
+/*
+	@Override
+	public int hashCode()
+
+	@Override
+	public boolean equals(Object obj);
+ */
+public class Node implements Comparable<Node> {
+    private final int x, y;
+    private double gCost, hCost, fCost;
     private Node parent;
 
     public Node(int x, int y) {
         this.x = x;
         this.y = y;
+        this.gCost = Double.MAX_VALUE;
+        this.hCost = Double.MAX_VALUE;
+        this.fCost = Double.MAX_VALUE;
+    }
+
+    @Override
+    public int compareTo(Node n) {
+        return Double.compare(this.fCost, n.fCost);
     }
 
     // Getters
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 
-    public int getGCost() {
+    public double getGCost() {
         return gCost;
     }
 
-    public int getHCost() {
+    public double getHCost() {
         return hCost;
     }
 
-    public int getFCost() {
+    public double getFCost() {
         return fCost;
     }
 
     // Setters
-    public void setGCost(int gCost) {
+    public void setGCost(double gCost) {
         this.gCost = gCost;
     }
 
-    public void setHCost(int hCost) {
+    public void setHCost(double hCost) {
         this.hCost = hCost;
     }
 
-    public void setFCost(int fCost) {
+    public void setFCost(double fCost) {
         this.fCost = fCost;
     }
 
