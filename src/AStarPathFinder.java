@@ -5,7 +5,7 @@ import java.util.PriorityQueue;
 public class AStarPathFinder {
     private final int size;
     private static final double MOVE_COST = 10;                // cost to move { left, right, up , down }
-    private static final double DIAGONAL_MOVE_COST = 10;       // cost to move diagonally
+    private static final double DIAGONAL_MOVE_COST = 14;       // cost to move diagonally
     private static final int[] dir = new int[]{-1, 0, 1};
 
 
@@ -50,28 +50,34 @@ public class AStarPathFinder {
         complete = true;
     }
 
-    // TODO: explore parent, add parents negs to openNodes, find new parent
     public void findPath(Node parent) {
         for (int x : dir) {
             for (int y : dir) {
                 if (x == 0 && y == 0) continue;
 
-                int xx = parent.getX() - size * x;
-                int yy = parent.getY() - size * y;
+                int xx = parent.getX() + size * x;
+                int yy = parent.getY() + size * y;
 
-                // ensure this is not obstacle n traverse it
                 // TODO: use proper grid size
-                // TODO: ensure not in closed Nodes
                 if (xx < 0 || yy < 0 || xx > N || yy > N || inClosedNodes(new Node(xx, yy)) || isObstacle(new Node(xx, yy))) {
                     continue;
                 }
 
-                // TODO: make sure {xx, yy} is not in closedNodes
                 addOrUpdateNode(xx, yy, parent);
             }
         }
 
-        // update parent
+        parent = null;
+        while (openNodes.size() != 0) {
+            Node current = openNodes.poll();
+            if (closedNodes.contains(current)) {
+                continue;
+            }
+            parent = current;
+            break;
+        }
+        closedNodes.add(parent);
+
         if (parent == null) {
             System.out.println("NO PATH");
             return;
@@ -79,19 +85,34 @@ public class AStarPathFinder {
 
         if (Node.isEqual(parent, endNode)) {
             System.out.println("Path Found!");
+            return;
         }
 
-        // remove parent from open list (priority
-        // add parent to closed list
+        findPath(parent);
     }
 
-
-    // TODO: implement add or update this node ( calculate gCost, hCost, fCost )
-    // TODO: add this node to openNodes and update new parent
     public void addOrUpdateNode(int x, int y, Node parent) {
-        // TODO: add check for validate {x, y}
+        Node openNode = new Node(x, y);
+        openNode.setParent(parent);
 
+        // calculate gCost
+        double xGCost = openNode.getX() - parent.getX();
+        double yGCost = openNode.getY() - parent.getY();
+        double gCost = parent.getGCost() + ((xGCost != 0 && yGCost != 0) ? MOVE_COST : DIAGONAL_MOVE_COST);
+        openNode.setGCost(gCost);
 
+        // calculate hCost
+        double hdx = Math.abs(endNode.getX() - openNode.getX());
+        double hdy = Math.abs(endNode.getY() - openNode.getY());
+        double hCost = Math.sqrt(hdx * hdx + hdy + hdy);
+        openNode.setHCost(hCost);
+
+        // calculate fCost
+        double fCost = gCost + hCost;
+        openNode.setFCost(fCost);
+
+        // add openNode to openNodes
+        openNodes.add(openNode);
     }
 
 
