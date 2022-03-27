@@ -1,20 +1,36 @@
-import java.util.Arrays;
+import java.sql.SQLOutput;
+import java.util.List;
 
 class Solution {
-    public int change(int amount, int[] coins) {
-        int n = coins.length;
-        int[][] dp = new int[n][amount + 1];
 
-        for (int i = 0; i < n; i++) {
-            int coin = coins[i];
-            dp[i][0] = 1;
-            for (int j = coin; j <= amount; j++) {
-                dp[i][j] = dp[i][j - coin] + (i == 0 ? 0 : dp[i - 1][j]);
+    public int maxValueOfCoins(List<List<Integer>> piles, int picks) {
+        int n = piles.size();
+        int m = picks + 1;
+
+        for (var pile : piles) {
+            while (pile.size() < m) {
+                pile.add(0);
             }
         }
 
-        System.out.println(Arrays.deepToString(dp));
+        System.out.println(piles);
 
-        return dp[n - 1][amount];
+        int[][] dp = new int[n][m];
+        for (int j = 1; j < m; j++) {
+            piles.get(0).set(j, piles.get(0).get(j) + piles.get(0).get(j - 1));
+            dp[0][j] = piles.get(0).get(j);
+        }
+
+        for (int i = 1; i < n; i++) { // ith pile
+            for (int j = 0; j < m; j++) { // atmost j picks
+                int cur = 0;
+                for (int k = 0; k <= j; k++) { // try all possible combinations of j-picks
+                    cur = Math.max(cur, dp[i - 1][j - k] + dp[i][j]);
+                }
+                dp[i][j] = cur;
+            }
+        }
+
+        return dp[n - 1][picks];
     }
 }
