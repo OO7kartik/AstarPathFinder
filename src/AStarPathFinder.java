@@ -8,6 +8,7 @@ public class AStarPathFinder {
     private static final double DIAGONAL_MOVE_COST = 14;       // cost to move diagonally
     private static final int[] dir = new int[]{-1, 0, 1};
 
+    private Frame frame;
 
     /*
         assume some grid size
@@ -27,7 +28,8 @@ public class AStarPathFinder {
     private HashSet<Node> obstacles;
     private ArrayList<Node> path;
 
-    public AStarPathFinder(int size) {
+    public AStarPathFinder(Frame frame, int size) {
+        this.frame = frame;
         this.size = size;
 
         complete = false;
