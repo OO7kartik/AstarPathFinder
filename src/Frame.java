@@ -75,7 +75,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, Mous
             g.fillRect(obstacle.getX() + 1, obstacle.getY() + 1, size - 1, size - 1);
         }
 
-        ArrayList<Node> openNodes = new ArrayList<Node>(pathFinder.getOpenNodes());
+        ArrayList<Node> openNodes = new ArrayList<>(pathFinder.getOpenNodes());
         g.setColor(style.greenHighlight);
         for (Node openNode : openNodes) {
             g.fillRect(openNode.getX() + 1, openNode.getY() + 1, size - 1, size - 1);
@@ -117,4 +117,36 @@ public class Frame extends JPanel implements ActionListener, MouseListener, Mous
     public int randomPixelIntensity(int rangeStart, int rangeEnd) {
         return (int) (Math.random() * (rangeEnd - rangeStart + 1)) + rangeStart;
     }
+
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (pathFinder.isRunning()) {
+            pathFinder.findPath(pathFinder.getParent());
+        }
+
+        if (pathFinder.isComplete() || pathFinder.noPathPresent()) {
+            R = (int) (Math.random() * ((R + 15) - (R - 15)) + (R - 15));
+            G = (int) (Math.random() * ((G + 15) - (G - 15)) + (G - 15));
+            B = (int) (Math.random() * ((B + 15) - (B - 15)) + (B - 15));
+
+            if (R >= 240 | R <= 15) {
+                R = randomPixelIntensity(0, 255);
+            }
+            if (G >= 240 | G <= 15) {
+                G = randomPixelIntensity(0, 255);
+            }
+            if (B >= 240 | B <= 15) {
+                B = randomPixelIntensity(0, 255);
+            }
+        }
+
+        // TODO: implement this
+        // Actions of run/stop/clear button
+        if (e.getActionCommand() != null) {
+
+        }
+        repaint();
+    }
+
 }

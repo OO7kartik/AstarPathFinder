@@ -10,6 +10,8 @@ public class AStarPathFinder {
     private static final double DIAGONAL_MOVE_COST = 14;       // cost to move diagonally
     private static final int[] dir = new int[]{-1, 0, 1};
 
+    private boolean running, noPath;
+
     private Frame frame;
 
     /*
@@ -23,7 +25,7 @@ public class AStarPathFinder {
 
     private boolean complete;
 
-    private Node startNode, endNode;
+    private Node startNode, endNode, parent;
 
     private PriorityQueue<Node> openNodes;
     private HashSet<Node> closedNodes;
@@ -35,6 +37,8 @@ public class AStarPathFinder {
         this.size = size;
 
         complete = false;
+        running = false;
+        noPath = true;
 
         openNodes = new PriorityQueue<>();
         closedNodes = new HashSet<>();
@@ -43,6 +47,7 @@ public class AStarPathFinder {
     }
 
     public void start(Node s, Node e) {
+        runnig = true;
         startNode = s;
         endNode = e;
         startNode.setGCost(0);
@@ -84,10 +89,22 @@ public class AStarPathFinder {
 
         if (parent == null) {
             System.out.println("NO PATH");
+            noPath = true;
+            running = false;
+            frame.repaint();
             return;
         }
 
         if (Node.isEqual(parent, endNode)) {
+            // TODO: implement getParent
+            endNode.setParent(parent.getParent());
+
+            // TODO: connectPath
+            connectPath();
+            running = false;
+            complete = true;
+            frame.repaint();
+
             System.out.println("Path Found!");
             return;
         }
@@ -137,6 +154,14 @@ public class AStarPathFinder {
         return complete;
     }
 
+    public boolean noPathPresent() {
+        return noPath;
+    }
+
+    public Node getParent() {
+        return parent;
+    }
+
     public HashSet<Node> getObstacles() {
         return obstacles;
     }
@@ -151,5 +176,9 @@ public class AStarPathFinder {
 
     public ArrayList<Node> getPath() {
         return path;
+    }
+
+    public boolean isRunning() {
+        return running;
     }
 }
