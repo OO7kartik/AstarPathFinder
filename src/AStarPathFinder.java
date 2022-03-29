@@ -1,3 +1,5 @@
+import java.io.PipedReader;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.PriorityQueue;
@@ -133,5 +135,21 @@ public class AStarPathFinder {
 
     public boolean isComplete() {
         return complete;
+    }
+
+    public HashSet<Node> getObstacles() {
+        return obstacles;
+    }
+
+    public HashSet<Node> getClosedNodes() {
+        return closedNodes;
+    }
+
+    public PriorityQueue<Node> getOpenNodes() {
+        return openNodes;
+    }
+
+    public ArrayList<Node> getPath() {
+        return path;
     }
 }
