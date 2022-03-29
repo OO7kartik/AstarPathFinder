@@ -19,4 +19,8 @@ public class ControlHandler {
         run.setMargin(new Insets(0, 0, 0, 0));
         run.setVisible(true);
     }
+
+    public void addAll() {
+        // TODO: add all components
+    }
 }
