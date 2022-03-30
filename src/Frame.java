@@ -149,7 +149,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, Mous
         }
     }
 
-    public void MapCalculations(MouseEvent e) {
+    public void DrawMappings(MouseEvent e) {
         if (SwingUtilities.isLeftMouseButton(e)) {
             int x = e.getX() - e.getX() % size;
             int y = e.getY() - e.getY() % size;
@@ -225,7 +225,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, Mous
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        MapCalculations(e);
+        DrawMappings(e);
     }
 
     @Override
@@ -250,7 +250,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, Mous
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        MapCalculations(e);
+        DrawMappings(e);
     }
 
     @Override
