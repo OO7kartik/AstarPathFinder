@@ -60,8 +60,29 @@ public class Frame extends JPanel implements ActionListener, MouseListener, Mous
 
         // PHASE 2
         // TODO: handle no path
-        // TODO: handle found path
+        if (pathFinder.noPathPresent()) {
+            timer.setDelay(50);
+            timer.start();
 
+            controlHandler.getRunButton().setText("clear");
+
+            // TODO: set some color flicker
+
+
+            // TODO: display "NO PATH"
+
+        }
+
+        // TODO: handle found path
+        if (pathFinder.foundPath()) {
+            controlHandler.getRunButton().setText("clear");
+
+            timer.setDelay(50);
+            timer.start();
+
+            // TODO: add flicker
+
+        }
 
         g.setColor(Color.lightGray);
         for (int h = 0; h < height; h += size) {
@@ -133,7 +154,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, Mous
             pathFinder.findPath(pathFinder.getParent());
         }
 
-        if (pathFinder.isComplete() || pathFinder.noPathPresent()) {
+        if (pathFinder.foundPath() || pathFinder.noPathPresent()) {
             R = (int) (Math.random() * ((R + 15) - (R - 15)) + (R - 15));
             G = (int) (Math.random() * ((G + 15) - (G - 15)) + (G - 15));
             B = (int) (Math.random() * ((B + 15) - (B - 15)) + (B - 15));
