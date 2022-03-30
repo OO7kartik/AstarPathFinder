@@ -20,6 +20,11 @@ public class ControlHandler {
         run.setVisible(true);
     }
 
+    public JButton getRunButton() {
+        return run;
+    }
+
+
     public void addAll() {
         // TODO: add all components
     }
