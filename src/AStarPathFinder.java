@@ -123,6 +123,10 @@ public class AStarPathFinder {
         Collections.reverse(path);
     }
 
+    public void addObstacle(Node node) {
+        obstacles.add(node);
+    }
+
     public void addNodeToPath(Node node) {
         path.add(node);
     }

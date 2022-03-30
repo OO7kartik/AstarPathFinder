@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Frame extends JPanel implements ActionListener, MouseListener, MouseMotionListener, MouseWheelListener, KeyListener {
 
@@ -9,6 +10,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, Mous
     JFrame window;
     AStarPathFinder pathFinder;
     int size;
+    char currentKey = (char) 0;
 
     Node startNode, endNode;
 
@@ -147,6 +149,32 @@ public class Frame extends JPanel implements ActionListener, MouseListener, Mous
         }
     }
 
+    public void MapCalculations(MouseEvent e) {
+        if (SwingUtilities.isLeftMouseButton(e)) {
+            int x = e.getX() - e.getX() % size;
+            int y = e.getY() - e.getY() % size;
+
+            if (currentKey == 's') {
+                if (startNode == null) {
+                    startNode = new Node(x, y);
+                } else {
+                    startNode.setXY(x, y);
+                }
+            } else if (currentKey == 'e') {
+                if (endNode == null) {
+                    endNode = new Node(x, y);
+                } else {
+                    endNode.setXY(x, y);
+                }
+            } else {
+                Node newObstacle = new Node(x, y);
+                pathFinder.addObstacle(newObstacle);
+            }
+
+            repaint();
+        }
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -186,17 +214,18 @@ public class Frame extends JPanel implements ActionListener, MouseListener, Mous
 
     @Override
     public void keyPressed(KeyEvent e) {
-
+        char key = e.getKeyChar();
+        currentKey = key;
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-
+        currentKey = (char) 0;
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        MapCalculations(e);
     }
 
     @Override
@@ -221,7 +250,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, Mous
 
     @Override
     public void mouseDragged(MouseEvent e) {
-
+        MapCalculations(e);
     }
 
     @Override
