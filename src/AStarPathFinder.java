@@ -12,13 +12,6 @@ public class AStarPathFinder {
     private boolean running, noPath;
 
     private Frame frame;
-
-    /*
-        assume some grid size
-        N = 100
-
-        in, future we will use Frame ( using GUI )
-    */
     private static final int N = 100;
 
 
@@ -98,7 +91,6 @@ public class AStarPathFinder {
         if (Node.isEqual(parent, endNode)) {
             endNode.setParent(parent.getParent());
 
-            // TODO: connectPath
             connectPath();
             running = false;
             pathFound = true;
