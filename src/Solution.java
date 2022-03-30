@@ -1,28 +1,30 @@
+import java.util.List;
+import java.util.Stack;
+
 class Solution {
-    private int n;
+    public int[] exclusiveTime(int n, List<String> logs) {
+        int[] res = new int[n];
+        int startTime = 0;
+        Stack<Integer> st = new Stack<>();
 
-    public void traverse(int cur, boolean[] vis, int[][] isConnected) {
-        vis[cur] = true;
+        for (String log : logs) {
+            String[] parts = log.split(":");
 
-        for (int neg = 0; neg < n; neg++) {
-            if (neg != cur && isConnected[cur][neg] == 1 && !vis[neg]) {
-                traverse(neg, vis, isConnected);
+            int fId = Integer.parseInt(parts[0]);
+            int endTime = Integer.parseInt(parts[2]);
+
+            if (parts[1].equals("start")) {
+                if (st.size() != 0) {
+                    res[st.peek()] += endTime - startTime + 1;
+                }
+                startTime = endTime;
+                st.push(fId);
+            } else {
+                res[st.pop()] += endTime - startTime + 1;
+                startTime = endTime + 1;
             }
         }
-    }
 
-    public int findCircleNum(int[][] isConnected) {
-        int cnt = 0;
-        n = isConnected.length;
-        boolean[] vis = new boolean[n];
-
-        for (int x = 0; x < n; x++) {
-            if (!vis[x]) {
-                cnt++;
-                traverse(x, vis, isConnected);
-            }
-        }
-
-        return cnt;
+        return res;
     }
 }
