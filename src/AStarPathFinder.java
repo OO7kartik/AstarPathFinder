@@ -47,10 +47,11 @@ public class AStarPathFinder {
     }
 
     public void start(Node s, Node e) {
-        runnig = true;
+        running = true;
         startNode = s;
         endNode = e;
         startNode.setGCost(0);
+        parent = startNode;
 
         addClosed(s);
 

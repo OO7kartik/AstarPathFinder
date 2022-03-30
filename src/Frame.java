@@ -118,6 +118,14 @@ public class Frame extends JPanel implements ActionListener, MouseListener, Mous
         return (int) (Math.random() * (rangeEnd - rangeStart + 1)) + rangeStart;
     }
 
+    void start() {
+        if (startNode != null && endNode != null) {
+            pathFinder.start(startNode, endNode);
+        } else {
+            System.out.println("Error: Please Provide startNode and endNode");
+        }
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -152,11 +160,12 @@ public class Frame extends JPanel implements ActionListener, MouseListener, Mous
 
     @Override
     public void keyTyped(KeyEvent e) {
+
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        
+
     }
 
     @Override
@@ -203,4 +212,5 @@ public class Frame extends JPanel implements ActionListener, MouseListener, Mous
     public void mouseWheelMoved(MouseWheelEvent e) {
 
     }
+
 }
