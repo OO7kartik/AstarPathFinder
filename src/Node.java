@@ -72,6 +72,10 @@ public class Node implements Comparable<Node> {
         this.parent = parent;
     }
 
+    public Node getParent() {
+        return parent;
+    }
+
     public static boolean isEqual(Node s, Node e) {
         return (s.getX() == e.getX() && s.getY() == e.getY());
     }
