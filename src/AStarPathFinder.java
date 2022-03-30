@@ -1,6 +1,5 @@
-import java.io.PipedReader;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.PriorityQueue;
 
@@ -18,7 +17,7 @@ public class AStarPathFinder {
         assume some grid size
         N = 100
 
-        in future we will use Frame ( using GUI )
+        in, future we will use Frame ( using GUI )
     */
     private static final int N = 100;
 
@@ -97,7 +96,6 @@ public class AStarPathFinder {
         }
 
         if (Node.isEqual(parent, endNode)) {
-            // TODO: implement getParent
             endNode.setParent(parent.getParent());
 
             // TODO: connectPath
@@ -111,6 +109,22 @@ public class AStarPathFinder {
         }
 
         findPath(parent);
+    }
+
+    public void connectPath() {
+        if (path.size() == 0) {
+            Node parentNode = endNode.getParent();
+
+            while (!Node.isEqual(parentNode, startNode)) {
+                addNodeToPath(parentNode);
+                parentNode = parentNode.getParent();
+            }
+        }
+        Collections.reverse(path);
+    }
+
+    public void addNodeToPath(Node node) {
+        path.add(node);
     }
 
     public void addOrUpdateNode(int x, int y, Node parent) {
