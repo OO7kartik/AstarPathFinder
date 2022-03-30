@@ -1,7 +1,7 @@
 
 
 public class Node implements Comparable<Node> {
-    private final int x, y;
+    private int x, y;
     private double gCost, hCost, fCost;
     private Node parent;
 
@@ -55,6 +55,10 @@ public class Node implements Comparable<Node> {
         return fCost;
     }
 
+    public Node getParent() {
+        return parent;
+    }
+
     // Setters
     public void setGCost(double gCost) {
         this.gCost = gCost;
@@ -72,8 +76,9 @@ public class Node implements Comparable<Node> {
         this.parent = parent;
     }
 
-    public Node getParent() {
-        return parent;
+    public void setXY(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
     public static boolean isEqual(Node s, Node e) {

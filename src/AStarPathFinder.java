@@ -22,7 +22,7 @@ public class AStarPathFinder {
     private static final int N = 100;
 
 
-    private boolean complete;
+    private boolean pathFound;
 
     private Node startNode, endNode, parent;
 
@@ -35,7 +35,7 @@ public class AStarPathFinder {
         this.frame = frame;
         this.size = size;
 
-        complete = false;
+        pathFound = false;
         running = false;
         noPath = true;
 
@@ -56,7 +56,7 @@ public class AStarPathFinder {
 
         findPath(startNode);
 
-        complete = true;
+        pathFound = true;
     }
 
     public void findPath(Node parent) {
@@ -101,7 +101,7 @@ public class AStarPathFinder {
             // TODO: connectPath
             connectPath();
             running = false;
-            complete = true;
+            pathFound = true;
             frame.repaint();
 
             System.out.println("Path Found!");
@@ -121,6 +121,10 @@ public class AStarPathFinder {
             }
         }
         Collections.reverse(path);
+    }
+
+    public void addObstacle(Node node) {
+        obstacles.add(node);
     }
 
     public void addNodeToPath(Node node) {
@@ -165,8 +169,8 @@ public class AStarPathFinder {
         closedNodes.add(node);
     }
 
-    public boolean isComplete() {
-        return complete;
+    public boolean foundPath() {
+        return pathFound;
     }
 
     public boolean noPathPresent() {

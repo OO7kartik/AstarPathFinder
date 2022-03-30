@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Frame extends JPanel implements ActionListener, MouseListener, MouseMotionListener, MouseWheelListener, KeyListener {
 
@@ -9,6 +10,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, Mous
     JFrame window;
     AStarPathFinder pathFinder;
     int size;
+    char currentKey = (char) 0;
 
     Node startNode, endNode;
 
@@ -60,8 +62,29 @@ public class Frame extends JPanel implements ActionListener, MouseListener, Mous
 
         // PHASE 2
         // TODO: handle no path
-        // TODO: handle found path
+        if (pathFinder.noPathPresent()) {
+            timer.setDelay(50);
+            timer.start();
 
+            controlHandler.getRunButton().setText("clear");
+
+            // TODO: set some color flicker
+
+
+            // TODO: display "NO PATH"
+
+        }
+
+        // TODO: handle found path
+        if (pathFinder.foundPath()) {
+            controlHandler.getRunButton().setText("clear");
+
+            timer.setDelay(50);
+            timer.start();
+
+            // TODO: add flicker
+
+        }
 
         g.setColor(Color.lightGray);
         for (int h = 0; h < height; h += size) {
@@ -126,6 +149,32 @@ public class Frame extends JPanel implements ActionListener, MouseListener, Mous
         }
     }
 
+    public void DrawMappings(MouseEvent e) {
+        if (SwingUtilities.isLeftMouseButton(e)) {
+            int x = e.getX() - e.getX() % size;
+            int y = e.getY() - e.getY() % size;
+
+            if (currentKey == 's') {
+                if (startNode == null) {
+                    startNode = new Node(x, y);
+                } else {
+                    startNode.setXY(x, y);
+                }
+            } else if (currentKey == 'e') {
+                if (endNode == null) {
+                    endNode = new Node(x, y);
+                } else {
+                    endNode.setXY(x, y);
+                }
+            } else {
+                Node newObstacle = new Node(x, y);
+                pathFinder.addObstacle(newObstacle);
+            }
+
+            repaint();
+        }
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -133,7 +182,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, Mous
             pathFinder.findPath(pathFinder.getParent());
         }
 
-        if (pathFinder.isComplete() || pathFinder.noPathPresent()) {
+        if (pathFinder.foundPath() || pathFinder.noPathPresent()) {
             R = (int) (Math.random() * ((R + 15) - (R - 15)) + (R - 15));
             G = (int) (Math.random() * ((G + 15) - (G - 15)) + (G - 15));
             B = (int) (Math.random() * ((B + 15) - (B - 15)) + (B - 15));
@@ -165,17 +214,18 @@ public class Frame extends JPanel implements ActionListener, MouseListener, Mous
 
     @Override
     public void keyPressed(KeyEvent e) {
-
+        char key = e.getKeyChar();
+        currentKey = key;
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-
+        currentKey = (char) 0;
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        DrawMappings(e);
     }
 
     @Override
@@ -200,7 +250,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, Mous
 
     @Override
     public void mouseDragged(MouseEvent e) {
-
+        DrawMappings(e);
     }
 
     @Override
