@@ -14,7 +14,6 @@ public class AStarPathFinder {
     private Frame frame;
     private static final int N = 100;
 
-
     private boolean pathFound;
 
     private Node startNode, endNode, parent;

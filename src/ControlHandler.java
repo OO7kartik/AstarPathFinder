@@ -5,12 +5,10 @@ public class ControlHandler {
     private Frame frame;
     private JButton run;
 
-
     public ControlHandler(Frame frame) {
         this.frame = frame;
 
-
-        // setup button
+        // setup run button
         run = new JButton();
         run.setText("run");
         run.setName("run");
@@ -24,8 +22,11 @@ public class ControlHandler {
         return run;
     }
 
+    public void setPositions() {
+        run.setBounds(116, frame.getHeight() - 88, 52, 22);
+    }
 
     public void addAll() {
-        // TODO: add all components
+        frame.add(run);
     }
 }
