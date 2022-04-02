@@ -129,6 +129,9 @@ public class Frame extends JPanel implements ActionListener, MouseListener, Mous
             g.fillRect(endNode.getX() + 1, endNode.getY() + 1, size - 1, size - 1);
         }
 
+        // drawing control panel
+        g.fillRect(10, height - 96, 322, 90);
+        controlHandler.setPositions();
     }
 
     // TODO: implement drawInfo
@@ -200,7 +203,18 @@ public class Frame extends JPanel implements ActionListener, MouseListener, Mous
         // TODO: implement this
         // Actions of run/stop/clear button
         if (e.getActionCommand() != null) {
-
+            if (e.getActionCommand().equals("run")) {
+                controlHandler.getRunButton().setText("stop");
+                start();
+            } else if (e.getActionCommand().equals("clear")) {
+                controlHandler.getRunButton().setText("run");
+            } else if (e.getActionCommand().equals("stop")) {
+                controlHandler.getRunButton().setText("start");
+                timer.stop();
+            } else if (e.getActionCommand().equals("start")) {
+                controlHandler.getRunButton().setText("stop");
+                timer.start();
+            }
         }
         repaint();
     }
@@ -215,6 +229,11 @@ public class Frame extends JPanel implements ActionListener, MouseListener, Mous
     public void keyPressed(KeyEvent e) {
         char key = e.getKeyChar();
         currentKey = key;
+
+        if (currentKey == KeyEvent.VK_SPACE) {
+            controlHandler.getRunButton().setText("stop");
+            start();
+        }
     }
 
     @Override
